@@ -76,6 +76,7 @@ final class MetadataLoader
 
         foreach ($associations as $association) {
             $column = $association['joinColumns'][0] ?? [];
+            $column += ['nullable' => false];
             if (!\count($column)) {
                 continue; // looks broken...
             }
