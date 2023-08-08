@@ -81,7 +81,7 @@ final class MetadataLoader
                 continue; // looks broken...
             }
             // ONE_TO_ONE  does not have the 'nullable' key, but creates tables that are nullable
-            $nullable = ($association['type'] === ClassMetadataInfo::ONE_TO_ONE || (bool) $column['nullable']);
+            $nullable = ($association['type'] === ClassMetadataInfo::ONE_TO_ONE || (isset($column['nullable']) ? (bool)$column['nullable'] : false));
             $hasDefault = false; // joins can never have a default relation
             $defaultValue = null;
             $dmeta->addField(
