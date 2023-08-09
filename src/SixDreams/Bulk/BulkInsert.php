@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace SixDreams\Bulk;
 
 use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use Doctrine\ORM\Proxy\Proxy;
 use SixDreams\Exceptions\FieldNotFoundException;
 use SixDreams\Exceptions\NoDefaultValueException;
 use SixDreams\Exceptions\NullValueException;
@@ -64,7 +65,7 @@ class BulkInsert extends AbstractBulk
      */
     public function addEntity(object $entity): BulkInsert
     {
-        if (\get_class($entity) !== $this->class) {
+        if (\get_class($entity) !== $this->class && !($entity instanceof $this->class && $entity instanceof Proxy)) {
             throw new WrongEntityException($this->class, $entity);
         }
 
