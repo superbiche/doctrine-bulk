@@ -6,6 +6,7 @@ namespace SixDreams\Bulk;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Proxy\Proxy;
 use SixDreams\DTO\ColumnMetadata;
 use SixDreams\DTO\ColumnMetadataInterface;
 use SixDreams\Exceptions\CannotChangeWhereException;
@@ -105,7 +106,7 @@ class BulkUpdate extends AbstractBulk
      */
     public function addEntity(object $entity, ?array $fields = null): BulkUpdate
     {
-        if (\get_class($entity) !== $this->class) {
+        if (\get_class($entity) !== $this->class && !($entity instanceof $this->class && $entity instanceof Proxy)) {
             throw new WrongEntityException($this->class, $entity);
         }
 
